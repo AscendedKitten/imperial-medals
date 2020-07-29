@@ -1,0 +1,23 @@
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 160px);
+    margin: 10px auto;
+    justify-content: center;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+#top {
+    clear: both;
+    margin: 0 1.66%;
+    width: auto;
+    padding: 3.5% 0;
+    background-color: #1E1E1E;
+    color: #fff;
+}
+
+#top p{
+    text-align:center;
+    line-height:2em;
+}

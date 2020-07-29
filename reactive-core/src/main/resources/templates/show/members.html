@@ -1,0 +1,86 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Imperial Medal Awardees</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" crossorigin="anonymous">
+
+    <script defer th:src="@{/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
+    <script defer th:src="@{/bootstrap.min.js}" crossorigin="anonymous"></script>
+
+    <script>
+        function openBday(btn) {
+            var name = $(btn).attr('memberName');
+            console.log(name);
+            if (name === 'HoneyBlu')
+                $('#bdayModal').modal('show');
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="top">
+    <p>Imperial Awardee List: Alpha<br/></p>
+</div>
+
+<div class="modal fade" id="bdayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">HAPPY BDAY BLU!!!!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>HAPPY BIRTHDAY!!!!</strong>
+
+                Dear Daniël,
+                I must admit my lack of styling knowledge has taken a toll on this message’s appearance, but I guess
+                this is what one ends up with trying to creatively substitute a letter. Nonetheless, I hope you are
+                having an absolutely amazing birthday! It’s not like you ever <strong>haven’t</strong> been a great
+                friend, but recent times have reminded me that you are nothing short of the poster child (or adult?? 19
+                gang!) for unconditional friendship. Really at some points I couldn’t help but feel guilty, simply
+                because it is hard to be as accepting and loyal a friend as you are to me. Every time I have had any
+                kind of issue or needed someone to talk you were there in an instant, no matter what happened before or
+                what you were dealing with yourself.
+                </br></br>
+                Out of all the people I have met online I sincerely doubt anyone will ever take your spot, and I hope to
+                (pls no jinx) extend our friendship into irl meetups in a not-so-far future.
+                </br></br>
+                Ich hoffe du genießt deinen Geburtstag noch in vollen Zügen,
+                </br>
+                - Cath <3
+
+                </br>
+                <strong>Edit #1</strong></br>
+                So when I thought of this as a creative way to pass along this message I figured it wouldn't be too hard
+                to code, right? <i>haha</i>
+                </br></br>
+                <strong>Edit #2</strong></br>
+                IT IS DONE POG ((I am so awful sorry this took me so long but unless I screw up really bad while
+                centering this should be good c:))
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Yeet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="container">
+        <div th:each="member : ${members}">
+            <input type="image" data-th-attr="memberName=${member.userName}"
+                   th:src="@{/members/__${member.userName}__/head}" onclick="openBday(this)"/>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
