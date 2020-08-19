@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/members")
@@ -41,14 +42,15 @@ public class MemberController {
 
     @GetMapping("/{name}")
     public ResponseEntity<Mono<MemberDTO>> getByName(@PathVariable("name") String name) {
+        //TODO: Update with name history fetched from UUID
         return new ResponseEntity<>(memberService.getByName(name).map(DTOMapping.INSTANCE::memberToDTO), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{name}/uuid")
-    public ResponseEntity<byte[]> getHeadBlobByName(@PathVariable("name") String uuid) throws IOException {
+    @GetMapping(value = "/{uuid}/head")
+    public ResponseEntity<byte[]> getHeadBlobByName(@PathVariable("uuid") UUID uuid) throws IOException {
         //CacheControl cacheCtrl =  CacheControl.maxAge(60, TimeUnit.SECONDS);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(ImageIO.read(new URL(MinecraftHeadUtility.headFromUUID(uuid))), "png", bos);
+        ImageIO.write(ImageIO.read(new URL(MinecraftHeadUtility.headFromUUID(uuid.toString().replace("-", "")))), "png", bos);
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<>(bos.toByteArray(), headers, HttpStatus.OK);

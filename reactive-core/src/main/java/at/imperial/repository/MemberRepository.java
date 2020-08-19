@@ -6,6 +6,6 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
 public interface MemberRepository extends ReactiveCrudRepository<Member, Long> {
-    @Query("SELECT * FROM MEMBER WHERE USER_NAME = :NAME")
-    Mono<Member> findByName(String name);
+    @Query("SELECT * FROM MEMBER WHERE uuid = :uuid")
+    Mono<Member> findByName(String uuid);
 }

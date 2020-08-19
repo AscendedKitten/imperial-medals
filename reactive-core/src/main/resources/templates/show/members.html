@@ -9,14 +9,6 @@
     <script defer th:src="@{/jquery-3.5.1.min.js}" crossorigin="anonymous"></script>
     <script defer th:src="@{/bootstrap.min.js}" crossorigin="anonymous"></script>
 
-    <script>
-        $(".heads").hover(function() {
-            $(this).css('cursor','pointer').attr('title', $(this).attr('memberName'));
-        }, function() {
-            $(this).css('cursor','auto');
-        });
-    </script>
-
 </head>
 <body>
 
@@ -26,8 +18,8 @@
 
 <div class="container">
     <div th:each="member : ${members}">
-        <input type="image" class="heads" data-th-attr="memberName=${member.userName}"
-               th:src="@{/members/__${member.userName}__/head}"/>
+        <input type="image" class="heads" data-th-attr="memberUuid=${member.uuid}"
+               th:src="@{/members/__${member.uuid}__/head}"/>
     </div>
 </div>
 
