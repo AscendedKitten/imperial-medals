@@ -15,6 +15,6 @@ public class Member {
     @Id
     private Long id;
     private String[] medals;
-    @Column("uuid")
     private UUID uuid;
+    private long discord;
 }

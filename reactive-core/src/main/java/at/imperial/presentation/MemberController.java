@@ -4,10 +4,8 @@ import at.imperial.domain.MemberDTO;
 import at.imperial.service.MemberService;
 import at.imperial.utility.DTOMapping;
 import at.imperial.utility.MinecraftHeadUtility;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/members")
@@ -46,9 +45,9 @@ public class MemberController {
         return new ResponseEntity<>(memberService.getByName(name).map(DTOMapping.INSTANCE::memberToDTO), HttpStatus.OK);
     }
 
+    @Cacheable("mcHeads")
     @GetMapping(value = "/{uuid}/head")
     public ResponseEntity<byte[]> getHeadBlobByName(@PathVariable("uuid") UUID uuid) throws IOException {
-        //CacheControl cacheCtrl =  CacheControl.maxAge(60, TimeUnit.SECONDS);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ImageIO.write(ImageIO.read(new URL(MinecraftHeadUtility.headFromUUID(uuid.toString().replace("-", "")))), "png", bos);
         final HttpHeaders headers = new HttpHeaders();
@@ -56,6 +55,4 @@ public class MemberController {
         return new ResponseEntity<>(bos.toByteArray(), headers, HttpStatus.OK);
 
     }
-
-
 }
